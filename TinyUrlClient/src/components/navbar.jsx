@@ -38,10 +38,10 @@ const Navbar = () => {
           </li>
         ))}
         <li className="px-4 py-2 rounded-xl bg-[#12A3ED] m-2 cursor-pointer font-semibold text-white">
-          Signin
+          <Link to="/login">Signin</Link>
         </li>
         <li className="px-4 py-2 rounded-xl bg-[#F0F2F5] m-2 cursor-pointer font-semibold">
-          Getting started
+          <Link to="register">Getting started</Link>
         </li>
       </ul>
 
@@ -59,13 +59,13 @@ const Navbar = () => {
         }
       >
         {/* Mobile Logo */}
-        <h1 className="w-full text-3xl font-bold text-[#00df9a] m-4">REACT.</h1>
+        <h1 className="w-full text-3xl font-bold text-[#000] m-4">TinyUrl</h1>
 
         {/* Mobile Navigation Items */}
         {navItems.map((item) => (
           <li
             key={item.id}
-            className="p-4 border-b rounded-xl hover:bg-[#00df9a] duration-300 hover:text-black cursor-pointer border-gray-600"
+            className="p-4 border-b rounded-xl hover:bg-[#fff] duration-300 hover:text-black cursor-pointer border-gray-600"
           >
             {item.text}
           </li>

@@ -5,6 +5,7 @@ import CardComponent from "../components/card";
 import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png"
 import card3 from "../assets/card3.png";
+import { Link } from "react-router-dom";
 
 const LandingPage = () => {
   return (
@@ -25,7 +26,7 @@ const LandingPage = () => {
               shorten it
             </p>
             <button className="bg-[#12A3ED] px-4 py-2 rounded-xl font-semibold text-white">
-              Get Started
+              <Link to="/register">Get Started</Link>
             </button>
           </div>
         </div>
@@ -62,7 +63,7 @@ const LandingPage = () => {
               reading to learn more.
             </p>
             <button className="bg-[#12A3ED] px-4 py-1 rounded-xl font-semibold text-white text-[14px] mx-auto">
-              Get Started for free
+              <Link to="/register">Get Started for free</Link>
             </button>
           </div>
         </div>
