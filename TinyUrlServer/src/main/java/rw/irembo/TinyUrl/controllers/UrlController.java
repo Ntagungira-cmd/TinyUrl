@@ -32,7 +32,7 @@ public class UrlController {
         Url url = urlService.generateShortUrl(req);
         if(url != null)
             return ResponseEntity.ok().body(new UrlResponse(url.getLongUrl(), url.getShortUrl(),
-                    url.getExpiresAt().toString()));
+                    url.getExpiresAt().toString(), url.getClicks()));
         return ResponseEntity.ok().body(new MessageResponse(HttpStatus.NOT_FOUND, "failed to generate link"));
     }
 
@@ -63,7 +63,7 @@ public class UrlController {
             // if the user has links, return them
             List<UrlResponse> urls = new ArrayList<>();
             for (Url u : url) {
-                urls.add(new UrlResponse(u.getLongUrl(), u.getShortUrl(), u.getExpiresAt().toString()));
+                urls.add(new UrlResponse(u.getLongUrl(), u.getShortUrl(), u.getExpiresAt().toString(), u.getClicks()));
             }
            return ResponseEntity.ok().body(urls);
         }

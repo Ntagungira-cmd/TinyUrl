@@ -9,4 +9,5 @@ public class UrlResponse {
     private String longUrl;
     private String shortUrl;
     private String expiryDate;
+    private Integer clickCount;
 }
