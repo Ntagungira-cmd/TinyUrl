@@ -10,7 +10,7 @@ import Footer from "../components/footer.jsx";
 const Login = () => {
   //form inputs states
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -18,11 +18,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //check if all fields are provided
-    if (!username || !password) {
+    if (!email || !password) {
       toast("Provide all fields", {
         position: "top-right",
         hideProgressBar: false,
-        // theme: "dark",
         type: "error",
         closeOnClick: true,
       });
@@ -31,7 +30,7 @@ const Login = () => {
     setLoading(true);
     try {
       const response = await axios.post(API_URL + "/api/auth/signin", {
-        username,
+        email,
         password,
       });
       const token = response?.data?.token;
@@ -39,16 +38,15 @@ const Login = () => {
       localStorage.setItem("token", token); //store token in local storage
       if (token) {
         //clear form inputs
-        setUsername("");
+        setEmail("");
         setPassword("");
         setLoading(false);
         //redirect to dashboard
-        navigate("/shop");
+        navigate("/dashboard");
       } else {
         toast(response?.data?.message, {
           position: "top-right",
           hideProgressBar: false,
-          // theme: "dark",
           type: "error",
           closeOnClick: true,
         });
@@ -59,7 +57,6 @@ const Login = () => {
       toast(error?.response?.data?.message || "An error occured", {
         position: "top-right",
         hideProgressBar: false,
-        // theme: "dark",
         type: "error",
         closeOnClick: true,
       });
@@ -78,17 +75,17 @@ const Login = () => {
             <input
               type="email"
               id="email"
-              className="w-full px-4 py-3 mt-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 placeholder-black text-sm"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              className="w-full px-4 py-3 mt-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 placeholder-gray-400 text-sm"
+              placeholder="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="mb-8">
             <input
               type="password"
               id="password"
-              className="w-full px-4 py-3 mt-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 placeholder-black text-sm"
+              className="w-full px-4 py-3 mt-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 placeholder-gray-400 text-sm"
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}

@@ -20,71 +20,65 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     //check if all fields are provided
-    if (!username|| !password || !email || !confirmPassword) {
+    if (!username || !password || !email || !confirmPassword) {
       toast("Provide all fields", {
         position: "top-right",
         hideProgressBar: false,
-        // theme: "dark",
         type: "error",
         closeOnClick: true,
       });
       return;
-    }
-    //check if passwords match
-    if (password !== confirmPassword) {
+    } else if (password !== confirmPassword) {
       toast("Passwords don't match", {
         position: "top-right",
         hideProgressBar: false,
-        // theme: "dark",
         type: "error",
         closeOnClick: true,
       });
       return;
-    }
-    setLoading(true);
-    try {
-      const response = await axios.post(API_URL + "/api/auth/signup", {
-        username,
-        email,
-        password,
-      });
-      console.log(response?.data);
-      if (response?.data?.message === "User registered successfully!") {
-        toast("Successfully created your account", {
-          position: "top-right",
-          hideProgressBar: false,
-          // theme: "dark",
-          type: "success",
-          closeOnClick: true,
+    } else {
+      setLoading(true);
+      try {
+        const response = await axios.post(API_URL + "/api/auth/signup", {
+          username,
+          email,
+          password,
         });
-        //clear form inputs
-        setEmail("");
-        setPassword("");
-        setUserName("");
-        setConfirmPassword("");
+        console.log(response?.data);
+        if (response?.data?.status === "CREATED") {
+          toast("Successfully created your account", {
+            position: "top-right",
+            hideProgressBar: false,
+            type: "success",
+            closeOnClick: true,
+          });
+          //clear form inputs
+          setEmail("");
+          setPassword("");
+          setUserName("");
+          setConfirmPassword("");
 
+          setLoading(false);
+          //redirect to login
+          navigate("/login");
+        } else {
+          toast(response?.data?.message, {
+            position: "top-right",
+            hideProgressBar: false,
+            type: "error",
+            closeOnClick: true,
+          });
+        }
+      } catch (error) {
+        console.log("catch error", error);
         setLoading(false);
-        //redirect to login
-        navigate("/login");
-      } else {
-        toast(response?.data?.message, {
+        toast(error?.response?.data?.message || "An error occured", {
           position: "top-right",
           hideProgressBar: false,
-          // theme: "dark",
           type: "error",
           closeOnClick: true,
         });
       }
-    } catch (error) {
-      console.log("catch error", error);
-      setLoading(false);
-      toast(error?.response?.data?.message || "An error occured", {
-        position: "top-right",
-        hideProgressBar: false,
-        // theme: "dark",
-        type: "error",
-        closeOnClick: true,
-      });
     }
   };
 
@@ -102,7 +96,7 @@ const Signup = () => {
               id="fullname"
               className="w-full px-4 py-3 mt-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 placeholder-black text-sm"
               placeholder="username"
-              value={name}
+              value={username}
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
