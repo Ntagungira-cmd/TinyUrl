@@ -142,12 +142,16 @@ const SortableTable = ({ TABLE_ROWS }) => {
               TABLE_ROWS.map(
                 ({ longUrl, shortUrl, expiryDate, clickCount }, index) => {
                   const isLast = index === TABLE_ROWS.length - 1;
-                  const status = new Date(expiryDate).getTime() > new Date().getTime()
+                  const now = new Date();
+                  const exp = new Date(expiryDate);
+                  const newDate = new Date(exp.getTime() + 62 * 60 * 1000);
+                  const status = newDate > now
                       ? "Live"
                       : "Expired";
                   const classes = isLast
                     ? "p-4"
                     : "p-4 border-b border-blue-gray-50";
+                    console.log(newDate);
 
                   return (
                     <tr key={longUrl}>
@@ -185,6 +189,7 @@ const SortableTable = ({ TABLE_ROWS }) => {
                             value={status}
                             color={status == "Live" ? "green" : "red"}
                           />
+                          {/* {newDate} */}
                         </div>
                       </td>
                       <td className={classes}>
