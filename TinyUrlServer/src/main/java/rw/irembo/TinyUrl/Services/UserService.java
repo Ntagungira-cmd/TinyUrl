@@ -25,10 +25,6 @@ public class UserService {
     RoleRepository roleRepository;
 
     public MessageResponse createUser(SignupRequest signUpRequest){
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return new MessageResponse(HttpStatus.ALREADY_REPORTED,"Error: Username is already taken!");
-        }
-
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return new MessageResponse(HttpStatus.ALREADY_REPORTED,"Error: Email is already in use!");
         }
