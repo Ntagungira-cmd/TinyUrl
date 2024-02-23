@@ -144,7 +144,7 @@ const SortableTable = ({ TABLE_ROWS }) => {
                   const isLast = index === TABLE_ROWS.length - 1;
                   const now = new Date();
                   const exp = new Date(expiryDate);
-                  const newDate = new Date(exp.getTime() + 62 * 60 * 1000);
+                  const newDate = new Date(exp.getTime() + 122 * 60 * 1000);
                   const status = newDate > now
                       ? "Live"
                       : "Expired";
@@ -176,7 +176,7 @@ const SortableTable = ({ TABLE_ROWS }) => {
                               color="blue-gray"
                               className="font-normal"
                             >
-                              {shortUrl}
+                              <a href={`${API_URL}/${shortUrl}`}>{shortUrl}</a>
                             </Typography>
                           </Tooltip>
                         </div>
