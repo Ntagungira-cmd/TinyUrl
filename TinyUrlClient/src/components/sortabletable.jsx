@@ -24,6 +24,7 @@ import DialogWithForm from "./DialogWithForm";
 import { API_URL } from "../utils/api";
 import { useState, useCallback } from "react";
 
+
 const TABS = [
   {
     label: "All",
@@ -39,7 +40,7 @@ const TABS = [
   },
 ];
 
-const TABLE_HEAD = ["Long Url", "Short", "Status", "Traffic"];
+const TABLE_HEAD = ["Long Url", "Short", "Status", "Traffic"," "];
 
 // const TABLE_ROWS = [
 //   {
@@ -76,7 +77,15 @@ const TABLE_HEAD = ["Long Url", "Short", "Status", "Traffic"];
 
 const SortableTable = ({ TABLE_ROWS }) => {
   const[copied, setCopied] = useState(false);
-  // console.log(copied);
+  const onCopyText = () => {
+    setCopied(true);
+    setTimeout(() => setCopied(false), 500);
+  };
+
+  const handleCopyClick = () => {
+    onCopyText()
+  }
+  
   return (
     <div className="h-full w-[80%] mx-auto">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -201,15 +210,23 @@ const SortableTable = ({ TABLE_ROWS }) => {
                           {clickCount}
                         </Typography>
                       </td>
-                      {/* <td className={classes}>
-                      <CopyToClipboard text={`${API_URL}/${shortUrl}`} onCopy={()=>setCopied(true)}>
-                        <Tooltip content="Copy Link">
-                          <IconButton variant="text" color={copied?"green":"gray"}>
-                            <PencilIcon className="h-4 w-4" />
-                          </IconButton>
-                        </Tooltip>
-                      </CopyToClipboard>
-                    </td> */}
+                      <td className={classes}>
+                        <CopyToClipboard
+                          text={`${API_URL}/${shortUrl}`}
+                          onCopy={() => setCopied(true)}
+                        >
+                          <button onClick={handleCopyClick}>
+                            <Tooltip content="Copy Link">
+                              <Typography
+                                variant="text"
+                                color={copied ? "green" : "gray"}
+                              >
+                                <PencilIcon className="h-4 w-4" />
+                              </Typography>
+                            </Tooltip>
+                          </button>
+                        </CopyToClipboard>
+                      </td>
                     </tr>
                   );
                 }
