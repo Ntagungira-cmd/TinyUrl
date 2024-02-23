@@ -81,7 +81,6 @@ const DialogWithForm = () => {
           });
         }
         handleOpen();
-        window.location.reload();
       } catch (error) {
         console.log("catch error", error);
         setIsLoading(false);
