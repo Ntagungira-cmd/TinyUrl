@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, Link } from "react-router-dom";
 import Logo from "../assets/logo.jpg";
+import Footer from "../components/footer";
 
 const Signup = () => {
   //form inputs states
@@ -152,6 +153,7 @@ const Signup = () => {
           .
         </p>
       </div>
+      <Footer />
     </div>
   );
 };

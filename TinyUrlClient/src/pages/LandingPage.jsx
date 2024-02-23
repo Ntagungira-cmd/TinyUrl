@@ -6,6 +6,7 @@ import card1 from "../assets/card1.png";
 import card2 from "../assets/card2.png"
 import card3 from "../assets/card3.png";
 import { Link } from "react-router-dom";
+import Footer from "../components/footer";
 
 const LandingPage = () => {
   return (
@@ -20,7 +21,7 @@ const LandingPage = () => {
             Shorten, brand and share links with our audience
           </h1>
           <div className="p-2 rounded-md flex flex-row items-center justify-between bg-white w-[40%]">
-            <p className="flex flex-row items-center justify-between text-gray-400">
+            <p className="flex flex-row flex-wrap items-center justify-between text-gray-400">
               {" "}
               <AiOutlineSearch size={20} className="mx-4" /> Paste link to
               shorten it
@@ -33,9 +34,9 @@ const LandingPage = () => {
       </div>
       <div className=" mx-auto rounded-xl bg-center bg-blend-normal w-[75%] pt-10">
         <div className="text-3xl font-bold text-black m-2 w-[60%]">
-          Linkify offers more than just link shortening
+          TinyUrl offers more than just link shortening
         </div>
-        <div className="flex flex-row justify-around items-center p-4">
+        <div className="flex flex-row flex-wrap justify-around items-center p-4">
           <CardComponent
             header="Brand Links"
             text="Increase brand recognition with each click. Generic links don't mean a thing. Branded links help instil confidence in your content."
@@ -68,6 +69,7 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

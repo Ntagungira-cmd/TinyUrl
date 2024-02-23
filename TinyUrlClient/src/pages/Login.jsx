@@ -5,6 +5,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate, Link } from "react-router-dom";
 import Logo from "../assets/logo.jpg";
+import Footer from "../components/footer.jsx";
 
 const Login = () => {
   //form inputs states
@@ -103,6 +104,7 @@ const Login = () => {
           </button>
         </form>
       </div>
+      <Footer />
     </div>
   );
 };
