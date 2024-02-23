@@ -13,6 +13,7 @@ import rw.irembo.TinyUrl.Repositories.RoleRepository;
 import rw.irembo.TinyUrl.Repositories.UserRepository;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -25,7 +26,10 @@ public class UserService {
     RoleRepository roleRepository;
 
     public MessageResponse createUser(SignupRequest signUpRequest){
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        Boolean emailExists = userRepository.existsByEmail(signUpRequest.getEmail());
+        System.out.println(emailExists.getClass());
+        if (emailExists) {
+            System.out.println("test");
             return new MessageResponse(HttpStatus.ALREADY_REPORTED,"Error: Email is already in use!");
         }
 
@@ -39,9 +43,12 @@ public class UserService {
 
         //assign roles to users
         if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER).orElse(
-                    roleRepository.save( new Role(ERole.ROLE_USER))
-            );
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    .orElseGet(() -> {
+                        Role role = new Role(ERole.ROLE_USER);
+                        roleRepository.save(role);
+                        return role;
+                    });
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
@@ -57,7 +64,6 @@ public class UserService {
 
         user.setRoles(roles);
         userRepository.save(user);
-
         return new MessageResponse(HttpStatus.CREATED,"User registered successfully!");
     }
 }

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
-
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @Controller
 public class UrlController {

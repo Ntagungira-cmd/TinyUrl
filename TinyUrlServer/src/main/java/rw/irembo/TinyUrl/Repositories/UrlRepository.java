@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface UrlRepository extends JpaRepository<Url, Long> {
     Url findByShortUrl(String shortUrl);
+    Boolean existsByByLongUrl(String longUrl);
     @Query("SELECT u FROM Url u WHERE u.userId = :userId")
     List<Url> findUrlByUserId(@Param("userId") Long userId);
 }

@@ -34,7 +34,8 @@ public class JwtUtils {
 
     public String generateJwtToken(UserDetailsImpl userDetails) {
         return Jwts.builder()
-                .setSubject(userDetails.getUsername())
+                .claim("email", userDetails.getEmail())
+                .claim("id", userDetails.getId())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(key())
@@ -47,7 +48,7 @@ public class JwtUtils {
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
-                .getSubject();
+                .get("email", String.class);
     }
 
     public boolean validateToken(String token) {
