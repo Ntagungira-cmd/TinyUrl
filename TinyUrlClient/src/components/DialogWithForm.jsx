@@ -80,6 +80,8 @@ const DialogWithForm = () => {
             closeOnClick: true,
           });
         }
+        handleOpen();
+        window.location.reload();
       } catch (error) {
         console.log("catch error", error);
         setIsLoading(false);
@@ -90,10 +92,6 @@ const DialogWithForm = () => {
           closeOnClick: true,
         });
       }
-
-      console.log("Form submitted:", { longUrl, userId, alias, expiryDate});
-      handleOpen();
-      window.location.reload(true);
     }
   };
 
