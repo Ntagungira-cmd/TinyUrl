@@ -79,7 +79,7 @@ const SortableTable = ({ TABLE_ROWS }) => {
   const[copied, setCopied] = useState(false);
   const onCopyText = () => {
     setCopied(true);
-    setTimeout(() => setCopied(false), 500);
+    setTimeout(() => setCopied(false), 1000);
   };
 
   const handleCopyClick = () => {
@@ -216,10 +216,10 @@ const SortableTable = ({ TABLE_ROWS }) => {
                           onCopy={() => setCopied(true)}
                         >
                           <button onClick={handleCopyClick}>
-                            <Tooltip content="Copy Link">
+                            <Tooltip content={copied ? 'Copied':'Copy Link'}>
                               <Typography
                                 variant="text"
-                                color={copied ? "green" : "gray"}
+                                color="gray"
                               >
                                 <PencilIcon className="h-4 w-4" />
                               </Typography>
