@@ -1,9 +1,18 @@
-import { useState } from 'react';
-import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
+import { useState } from "react";
+import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import Logo from '../assets/logo.jpg';
+import Logo from "../assets/logo.jpg";
+import PropTypes from "prop-types";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const Navbar = ({ isLoggedIn }) => {
+  const navigate = useNavigate();
+  //clear token from localstorage
+  const handleLogOut = () => {
+    localStorage.clear("token");
+    navigate("/")
+  };
+
   // State to manage the navbar's visibility
   const [nav, setNav] = useState(false);
 
@@ -14,17 +23,17 @@ const Navbar = () => {
 
   // Array containing navigation items
   const navItems = [
-    { id: 0, text: 'About'},
-    { id: 1, text: 'Features' },
-    { id: 2, text: 'Solutions' },
-    { id: 3, text: 'Pricing' },
+    { id: 0, text: "About" },
+    { id: 1, text: "Features" },
+    { id: 2, text: "Solutions" },
+    { id: 3, text: "Pricing" },
   ];
 
   return (
     <div className="bg-white flex justify-around items-center h-24 max-w-[1240px] mx-auto px-4 text-black">
       {/* Logo */}
       <Link to="/" className="w-[10%]">
-        <img src={Logo} alt="logo" className='w-full'/>
+        <img src={Logo} alt="logo" className="w-full" />
       </Link>
 
       {/* Desktop Navigation */}
@@ -40,9 +49,18 @@ const Navbar = () => {
         <li className="px-4 py-2 rounded-xl bg-[#12A3ED] m-2 cursor-pointer font-semibold text-white">
           <Link to="/login">Signin</Link>
         </li>
-        <li className="px-4 py-2 rounded-xl bg-[#F0F2F5] m-2 cursor-pointer font-semibold">
-          <Link to="register">Getting started</Link>
-        </li>
+        {isLoggedIn ? (
+          <button
+            className="px-4 py-2 rounded-xl bg-red-300 m-2 cursor-pointer font-semibold text-white"
+            onClick={handleLogOut}
+          >
+            logout
+          </button>
+        ) : (
+          <li className="px-4 py-2 rounded-xl bg-[#F0F2F5] m-2 cursor-pointer font-semibold">
+            <Link to="register">Getting started</Link>
+          </li>
+        )}
       </ul>
 
       {/* Mobile Navigation Icon */}
@@ -73,6 +91,10 @@ const Navbar = () => {
       </ul>
     </div>
   );
+};
+
+Navbar.propTypes = {
+  isLoggedIn: PropTypes.bool,
 };
 
 export default Navbar;

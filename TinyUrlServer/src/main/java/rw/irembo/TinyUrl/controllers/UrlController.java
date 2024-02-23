@@ -29,6 +29,7 @@ public class UrlController {
     private UrlService urlService;
     @PostMapping("/generate")
     public ResponseEntity<?> generateUrl(@Valid @RequestBody UrlRequest req) {
+        System.out.println(req.getAlias());
         Url url = urlService.generateShortUrl(req);
         if(url != null)
             return ResponseEntity.ok().body(new UrlResponse(url.getLongUrl(), url.getShortUrl(),

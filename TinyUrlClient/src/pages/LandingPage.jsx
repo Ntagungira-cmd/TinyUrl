@@ -11,7 +11,7 @@ import Footer from "../components/footer";
 const LandingPage = () => {
   return (
     <div className="max-w-[1240px] text-black">
-      <Navbar />
+      <Navbar isLoggedIn={false}/>
       <div
         className=" mx-auto rounded-xl bg-center bg-blend-normal w-[75%]"
         style={{ backgroundImage: `url(${bg})` }}

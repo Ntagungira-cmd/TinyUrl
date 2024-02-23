@@ -32,7 +32,7 @@ const DialogWithForm = () => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
-
+    setIsLoading(true)
     if (!longUrl) {
       toast("URL is required", {
         position: "top-right",
@@ -48,7 +48,7 @@ const DialogWithForm = () => {
           {
             longUrl,
             userId,
-            alias:
+            alias,
             expiryDate
           },
           //add auth header
