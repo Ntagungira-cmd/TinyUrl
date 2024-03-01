@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import{ useState } from "react";
 import {
   Button,
   Dialog,
@@ -15,8 +15,10 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
 const DialogWithForm = () => {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen((cur) => !cur);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => {
+    setOpen((cur) => !cur);
+  };
 
   const [longUrl, setLongUrl] = useState("");
   const [alias, setAlias] = useState("");
@@ -58,8 +60,8 @@ const DialogWithForm = () => {
             },
           }
         );
-        if (response?.data?.status === "CREATED") {
-          toast("Successfully created your account", {
+        if (response?.status === 200) {
+          toast("Link created", {
             position: "top-right",
             hideProgressBar: false,
             type: "success",
@@ -71,7 +73,10 @@ const DialogWithForm = () => {
           setExpiryDate("");
 
           setIsLoading(false);
+          handleOpen();
+          window.location.reload();
         } else {
+          setIsLoading(false);
           toast(response?.data?.message, {
             position: "top-right",
             hideProgressBar: false,
@@ -79,7 +84,6 @@ const DialogWithForm = () => {
             closeOnClick: true,
           });
         }
-        handleOpen();
       } catch (error) {
         setIsLoading(false);
         toast(error || "An error occured", {
@@ -93,7 +97,7 @@ const DialogWithForm = () => {
   };
 
   return (
-    <>
+    <div>
       <ToastContainer />
       <Button
         onClick={handleOpen}
@@ -152,7 +156,7 @@ const DialogWithForm = () => {
           </CardFooter>
         </Card>
       </Dialog>
-    </>
+    </div>
   );
 };
 

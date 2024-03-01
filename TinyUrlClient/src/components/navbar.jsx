@@ -1,21 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.jpg";
 import PropTypes from "prop-types";
-import { ArrowLeftEndOnRectangleIcon} from "@heroicons/react/24/solid";
+import { ArrowLeftEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 import avatar from "../assets/avatar-svgrepo-com.svg";
 import { jwtDecode } from "jwt-decode";
 
-const Navbar = ({ isLoggedIn }) => {
+const Navbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isLoggedIn,setIsLoggedIn] = useState(false);
+  const [username, setUsername] = useState("");
+
   // Function to toggle dropdown visibility
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
   };
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const username = jwtDecode(token).email;
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setIsLoggedIn(true);
+      setUsername(jwtDecode(token).email);
+    }else{
+      setIsLoggedIn(false);
+      navigate("/login");
+    }
+  }, []);
+
+
   // Array containing navigation items
   const navItems = [
     { id: 0, text: "About" },

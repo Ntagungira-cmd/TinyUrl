@@ -24,6 +24,7 @@ import DialogWithForm from "./DialogWithForm";
 import { API_URL } from "../utils/api";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const TABS = [
   {
@@ -42,15 +43,29 @@ const TABS = [
 
 const TABLE_HEAD = ["Long Url", "Short", "Status", "Traffic", " "];
 
-const SortableTable = ({ TABLE_ROWS }) => {
+const SortableTable = () => {
   const [copied, setCopied] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
   const token = localStorage.getItem("token");
+  const userId = jwtDecode(token).id;
+
+  const fetchLinks = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/urls/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setData(response?.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    setData(TABLE_ROWS);
-  }, [TABLE_ROWS]);
+    fetchLinks();
+  }, []);
 
   const handleDelete = async (shortUrl) => {
     setIsLoading(true);
@@ -61,9 +76,7 @@ const SortableTable = ({ TABLE_ROWS }) => {
         },
       });
       if (response.status === 200) {
-        const upDateLinks = TABLE_ROWS.filter(
-          (link) => link.shortUrl !== shortUrl
-        );
+        const upDateLinks = data.filter((link) => link.shortUrl !== shortUrl);
         setData(upDateLinks);
       }
       setIsLoading(false);
@@ -83,7 +96,8 @@ const SortableTable = ({ TABLE_ROWS }) => {
 
   return (
     <div className="mt-35">
-      {isLoading && (<div
+      {isLoading && (
+        <div
           className="inline-block h-8 w-8 bg-gray-900 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
           role="status"
         >
