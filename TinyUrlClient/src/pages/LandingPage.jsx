@@ -32,7 +32,7 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
-      <div className=" mx-auto rounded-xl bg-center bg-blend-normal w-[75%] pt-10">
+      <div className="rounded-xl bg-center bg-blend-normal w-[75%] pt-10">
         <div className="text-3xl font-bold text-black m-2 w-[60%]">
           TinyUrl offers more than just link shortening
         </div>
