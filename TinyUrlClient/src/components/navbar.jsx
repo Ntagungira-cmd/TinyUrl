@@ -1,26 +1,21 @@
 import { useState } from "react";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.jpg";
 import PropTypes from "prop-types";
+import { ArrowLeftEndOnRectangleIcon} from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
+import avatar from "../assets/avatar-svgrepo-com.svg";
+import { jwtDecode } from "jwt-decode";
 
 const Navbar = ({ isLoggedIn }) => {
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  // Function to toggle dropdown visibility
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
   const navigate = useNavigate();
-  //clear token from localstorage
-  const handleLogOut = () => {
-    localStorage.clear("token");
-    navigate("/")
-  };
-
-  // State to manage the navbar's visibility
-  const [nav, setNav] = useState(false);
-
-  // Toggle function to handle the navbar's display
-  const handleNav = () => {
-    setNav(!nav);
-  };
-
+  const token = localStorage.getItem("token");
+  const username = jwtDecode(token).email;
   // Array containing navigation items
   const navItems = [
     { id: 0, text: "About" },
@@ -30,7 +25,7 @@ const Navbar = ({ isLoggedIn }) => {
   ];
 
   return (
-    <div className="bg-white flex justify-around items-center h-24 max-w-[1240px] mx-auto px-4 text-black">
+    <div className="bg-white flex justify-around items-center h-24 max-w-[1240px] mx-auto mb-20 px-4 text-black">
       {/* Logo */}
       <Link to="/" className="w-[10%]">
         <img src={Logo} alt="logo" className="w-full" />
@@ -46,16 +41,16 @@ const Navbar = ({ isLoggedIn }) => {
             <Link to="#">{item.text}</Link>
           </li>
         ))}
-        <li className="px-4 py-2 rounded-xl bg-[#12A3ED] m-2 cursor-pointer font-semibold text-white">
-          <Link to="/login">Signin</Link>
-        </li>
         {isLoggedIn ? (
-          <button
-            className="px-4 py-2 rounded-xl bg-red-300 m-2 cursor-pointer font-semibold text-white"
-            onClick={handleLogOut}
-          >
-            logout
-          </button>
+          " "
+        ) : (
+          <li className="px-4 py-2 rounded-xl bg-[#12A3ED] m-2 cursor-pointer font-semibold text-white">
+            <Link to="/login">Signin</Link>
+          </li>
+        )}
+
+        {isLoggedIn ? (
+          <></>
         ) : (
           <li className="px-4 py-2 rounded-xl bg-[#F0F2F5] m-2 cursor-pointer font-semibold">
             <Link to="register">Getting started</Link>
@@ -63,32 +58,50 @@ const Navbar = ({ isLoggedIn }) => {
         )}
       </ul>
 
-      {/* Mobile Navigation Icon */}
-      <div onClick={handleNav} className="block md:hidden">
-        {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
-      </div>
-
-      {/* Mobile Navigation Menu */}
-      <ul
-        className={
-          nav
-            ? "fixed md:hidden left-0 top-0 w-[60%] h-full border-r border-r-gray-900 bg-[#000300] ease-in-out duration-500"
-            : "ease-in-out w-[60%] duration-500 fixed top-0 bottom-0 left-[-100%]"
-        }
-      >
-        {/* Mobile Logo */}
-        <h1 className="w-full text-3xl font-bold text-[#000] m-4">TinyUrl</h1>
-
-        {/* Mobile Navigation Items */}
-        {navItems.map((item) => (
-          <li
-            key={item.id}
-            className="p-4 border-b rounded-xl hover:bg-[#fff] duration-300 hover:text-black cursor-pointer border-gray-600"
+      {isLoggedIn && (
+        <div className="outline-none text-center w-[7%] rounded-full">
+          <button
+            onClick={toggleDropdown}
+            type="button"
+            className="inline-flex items-center justify-center w-[100%] rounded-full border border-transparent text-sm font-medium text-white focus:outline-none"
+            id="options-menu"
+            aria-haspopup="true"
+            aria-expanded="true"
           >
-            {item.text}
-          </li>
-        ))}
-      </ul>
+            {/* Add your user avatar or icon here */}
+            <span className="w-[100%]">
+              <img src={avatar} className="w-[100%]" sizes="30" />
+            </span>
+          </button>
+
+          {/* Dropdown Content */}
+          {isDropdownOpen && (
+            <div
+              className="origin-top-right absolute right-0 mt-2 w-[20%] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="options-menu"
+            >
+              <div className="py-1 " role="none">
+                <p className="hover:bg-blue-gray-100">{username}</p>
+                <button
+                  type="button"
+                  className="block px-4 py-2 text-sm w-full items-center text-center"
+                  role="menuitem"
+                  onClick={() => {
+                    // Add logout logic here
+                    localStorage.clear("token");
+                    navigate("/");
+                    toggleDropdown();
+                  }}
+                >
+                  <ArrowLeftEndOnRectangleIcon className="h-5 w-5 mx-auto text-blue-500" />
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

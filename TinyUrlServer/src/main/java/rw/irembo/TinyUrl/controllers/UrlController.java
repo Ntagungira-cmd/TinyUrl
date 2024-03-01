@@ -57,6 +57,20 @@ public class UrlController {
         }
         return ResponseEntity.ok().body(new MessageResponse(HttpStatus.NOT_FOUND, "There was an error redirecting"));
     }
+
+    @DeleteMapping("/delete/{tinyUrl}")
+    public ResponseEntity<?> deleteUrl(@PathVariable String tinyUrl){
+        if(!isNullOrEmpty(tinyUrl)){
+            Url url = urlService.findUrlByShortUrl(tinyUrl);
+            if(url != null){
+                urlService.deleteUrl(tinyUrl);
+                return ResponseEntity.ok().body(new MessageResponse(HttpStatus.OK, "link deleted"));
+            }
+            return ResponseEntity.ok().body(new MessageResponse(HttpStatus.NOT_FOUND, "link not found"));
+        }
+        return ResponseEntity.ok().body(new MessageResponse(HttpStatus.NOT_FOUND, "There was an error deleting"));
+    }
+
     @GetMapping("/urls/{userId}")
     public ResponseEntity<?> findUrlByUserId(@PathVariable Long userId){
         List<Url> url = urlService.findUrlByUserId(userId);

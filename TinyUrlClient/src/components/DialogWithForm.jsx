@@ -58,7 +58,6 @@ const DialogWithForm = () => {
             },
           }
         );
-        console.log(response?.data);
         if (response?.data?.status === "CREATED") {
           toast("Successfully created your account", {
             position: "top-right",
@@ -82,7 +81,6 @@ const DialogWithForm = () => {
         }
         handleOpen();
       } catch (error) {
-        console.log("catch error", error);
         setIsLoading(false);
         toast(error || "An error occured", {
           position: "top-right",
