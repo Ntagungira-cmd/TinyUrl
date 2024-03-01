@@ -22,9 +22,6 @@ const Navbar = () => {
     if (token) {
       setIsLoggedIn(true);
       setUsername(jwtDecode(token).email);
-    }else{
-      setIsLoggedIn(false);
-      navigate("/login");
     }
   }, []);
 
@@ -104,6 +101,7 @@ const Navbar = () => {
                   onClick={() => {
                     // Add logout logic here
                     localStorage.clear("token");
+                    setIsLoggedIn(false);
                     navigate("/");
                     toggleDropdown();
                   }}
