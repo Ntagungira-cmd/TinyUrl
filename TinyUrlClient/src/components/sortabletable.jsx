@@ -24,7 +24,6 @@ import DialogWithForm from "./DialogWithForm";
 import { API_URL } from "../utils/api";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 
 const TABS = [
   {
@@ -66,22 +65,9 @@ const SortableTable = ({ TABLE_ROWS }) => {
           (link) => link.shortUrl !== shortUrl
         );
         setData(upDateLinks);
-        console.log("toast");
-        toast("Link Deleted", {
-          position: "top-right",
-          hideProgressBar: false,
-          type: "success",
-          closeOnClick: true,
-        });
       }
       setIsLoading(false);
     } catch (error) {
-      toast("An Error Ocurred", {
-        position: "top-right",
-        hideProgressBar: false,
-        type: "error",
-        closeOnClick: true,
-      });
       setIsLoading(false);
     }
   };
@@ -97,7 +83,6 @@ const SortableTable = ({ TABLE_ROWS }) => {
 
   return (
     <div className="mt-35">
-      <ToastContainer />
       {isLoading && (<div
           className="inline-block h-8 w-8 bg-gray-900 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
           role="status"
