@@ -32,11 +32,11 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
-      <div className="rounded-xl bg-center bg-blend-normal w-[75%] pt-10">
+      <div className=" mx-auto rounded-xl bg-center bg-blend-normal w-[75%] pt-10">
         <div className="text-3xl font-bold text-black m-2 w-[60%]">
           TinyUrl offers more than just link shortening
         </div>
-        <div className="flex flex-row flex-wrap justify-around items-center p-4">
+        <div className="flex flex-row justify-around items-center p-4">
           <CardComponent
             header="Brand Links"
             text="Increase brand recognition with each click. Generic links don't mean a thing. Branded links help instil confidence in your content."
